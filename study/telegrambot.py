@@ -3,7 +3,7 @@ from telegram.ext import Updater
 from telegram.ext import MessageHandler, Filters
 
 token = '0000000000000000000000000000000000' #set token
-id = '5362560112'
+id = '0000000000' # set id
 
 bot = telegram.Bot(token)
 
