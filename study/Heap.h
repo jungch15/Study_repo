@@ -1,9 +1,4 @@
-/*
- * Heap.h
- *
- *  Created on: 2021. 11. 15.
- *      Author: chan
- */
+
 
 #ifndef HEAP_H_
 #define HEAP_H_
@@ -49,7 +44,7 @@ public:
 		node[i].setKey(key);
 
 	}
-	HeapNode remove(){ //µÎ°íµÎ°í º¸µµ·Ï ÇÏÀÚ ³»°¡ ÇÑ°Ô ¾Æ´Ï´Ù.
+	HeapNode remove(){ //ë‘ê³ ë‘ê³  ë³´ë„ë¡ í•˜ìž ë‚´ê°€ í•œê²Œ ì•„ë‹ˆë‹¤.
 		if(isEmpty()) return NULL;
 		HeapNode item = node[1];
 		HeapNode last = node[size--];
@@ -105,7 +100,7 @@ public:
 		node[i].setKey(key);
 
 	}
-	HeapNode remove(){ //µÎ°íµÎ°í º¸µµ·Ï ÇÏÀÚ ³»°¡ ÇÑ°Ô ¾Æ´Ï´Ù.
+	HeapNode remove(){ //ë‘ê³ ë‘ê³  ë³´ë„ë¡ í•˜ìž ë‚´ê°€ í•œê²Œ ì•„ë‹ˆë‹¤.
 		if(isEmpty()) return NULL;
 		HeapNode item = node[1];
 		HeapNode last = node[size--];
@@ -138,7 +133,7 @@ public:
 };
 
 
-//Á¤·ÄµÇÁö ¾ÊÀº ¹è¿­À» ÀÌ¿ëÇÑ ¿ì¼±¼øÀ§ Å¥
+//ì •ë ¬ë˜ì§€ ì•Šì€ ë°°ì—´ì„ ì´ìš©í•œ ìš°ì„ ìˆœìœ„ í
 class MaxPriorityQueue{
 private:
 	int elem[MAX_DEGREE];
@@ -147,7 +142,7 @@ public:
 	MaxPriorityQueue(int s=0): size(s){}
 	void insert(int elem){this->elem[++size] = elem;}
 	int remove(){
-		//ÃÖ´ë°ª Ã£°í Ãâ·Â
+		//ìµœëŒ€ê°’ ì°¾ê³  ì¶œë ¥
 		int max=elem[1];
 		int position = find();
 		for(int i=position;i<=size;i++)
@@ -171,7 +166,7 @@ public:
 
 
 	bool isHeapRecur(int a[], int size){
-			//ºÎ¸ðÀÇ Å°°ª > ÀÚ½ÄÀÇ Å° °ª
+			//ë¶€ëª¨ì˜ í‚¤ê°’ > ìžì‹ì˜ í‚¤ ê°’
 			if(a[size] > a[size/2])
 				return false;
 			if(size == 0)
@@ -193,7 +188,7 @@ public:
 		}
 };
 
-//Á¤·ÄµÈ ¿¬°á¸®½ºÆ®¸¦ ÀÌ¿ëÇÑ ¿ì¼±¼øÀ§ Å¥
+//ì •ë ¬ëœ ì—°ê²°ë¦¬ìŠ¤íŠ¸ë¥¼ ì´ìš©í•œ ìš°ì„ ìˆœìœ„ í
 
 class Node{
 private:
@@ -203,11 +198,11 @@ public:
 	Node(int k):key(k),link(NULL){}
 	int getKey(){return key;}
 	Node* getLink(){return link;}
-	void insert(Node* n){  //´ÙÀ½ Ç×¿¡ °ªÀ» Ãß°¡
+	void insert(Node* n){  //ë‹¤ìŒ í•­ì— ê°’ì„ ì¶”ê°€
 		n->link = link;
 		link = n;
 	}
-	Node* remove(){// ´ÙÀ½ Ç×°ª »èÁ¦
+	Node* remove(){// ë‹¤ìŒ í•­ê°’ ì‚­ì œ
 		if(link == NULL) return NULL;
 		Node* removed = link;
 		link = removed->link;
@@ -263,7 +258,7 @@ public:
 
 
 
-//ÈüÁ¤·Ä
+//íž™ì •ë ¬
 void heapSort(int a[],int n){
 	MaxHeap heap;
 	for(int i=0;i<n;i++)
