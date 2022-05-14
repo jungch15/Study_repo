@@ -7,12 +7,6 @@ id = '0000000000' # set id
 
 bot = telegram.Bot(token)
 
-'''
-updates = bot.getUpdates()
-for u in updates:
-    print(u.message)
-'''
-
 # updater
 updater = Updater(token=token, use_context=True)
 dispatcher = updater.dispatcher
