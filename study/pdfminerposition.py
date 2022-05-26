@@ -8,7 +8,7 @@ from pdfminer.pdfdevice import PDFDevice
 from pdfminer.layout import LAParams
 from pdfminer.converter import PDFPageAggregator
 import pdfminer
-
+from PIL import Image
 # Open a PDF file.
 fp = open('C:/Users/chan/Downloads/신입생_대학생활안내(2022).pdf', 'rb')
 
@@ -46,24 +46,41 @@ def parse_obj(lt_objs,str):
 
         # if it's a textbox, print text and location
         if isinstance(obj, pdfminer.layout.LTTextBoxHorizontal):
-            posy = 1000
             if str in obj.get_text():
-                posy = obj.bbox[3]
-            if obj.bbox[3]<posy:
-                print ("%s" % (obj.get_text().replace('\n', '_')))
-
+                '''
+                print ("%6d %6d %6d %6d %s" % (obj.bbox[0], obj.bbox[3],
+                                           obj.bbox[2], obj.bbox[1],
+                                           obj.get_text().replace('\n', '_')))
+                                           '''
+                return obj.bbox[0], obj.bbox[3],obj.bbox[2], obj.bbox[1]
+            else:
+                continue
         # if it's a container, recurse
         elif isinstance(obj, pdfminer.layout.LTFigure):
             parse_obj(obj._objs)
 
 # loop over all pages in the document
+pg = input() # pagenumber
+pgint = int(pg)
+str = input() # 찾을 문자열
 n=0
 for page in PDFPage.create_pages(document):
    n=n+1
-   if n == 5:
-    # read the page into a layout object
+   if n == pgint:
+    # read the page :into a layout object
         interpreter.process_page(page)
         layout = device.get_result()
 
     # extract text from this object
-        parse_obj(layout._objs,"신입생")
+        a,b,c,d = parse_obj(layout._objs,str)
+        #print(a,b,c,d)
+        
+        img = Image.open(r"C:/Users/chan/Downloads/페이지 원본 신입생_대학생활안내(2022)_"+pg+".jpg")
+    #image size = 590x834
+        img = img.resize((590,834))
+    # x start, y start, x length, y length
+        crop_area = (a,834-b,590,834)
+
+        cropped_img = img.crop(crop_area)
+        cropped_img.show()
+        cropped_img.save('C:/Users/chan/Downloads/' + 'test-croped' +'.jpg', 'JPEG')
