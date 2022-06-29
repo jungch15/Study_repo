@@ -1,0 +1,22 @@
+def solution(progresses, speeds):
+    answer = []
+    queue =[]
+    for i in progresses:
+        queue.append(i)
+    day =0
+    num =0
+    while len(queue) != 0:
+        if queue[0] + day*speeds[0] >= 100:
+            num+=1
+            a=queue.pop(0)  
+            speeds.pop(0)
+            if len(queue) == 0:
+                answer.append(num)
+        else:
+            if num != 0:
+                answer.append(num)
+            day+=1
+            num=0
+        
+
+    return answer

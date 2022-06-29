@@ -1,0 +1,28 @@
+import sys
+
+def solution(progresses, speeds):
+    answer = []
+    
+    queue =[]
+    for i in progresses:
+        queue.append(i)
+    while len(queue) != 0:
+        num =0
+        for i in range(len(queue)):
+            queue[i] = queue[i] + speeds[i]
+        while queue[0] >= 100:
+            num+=1
+            a=queue.pop(0)  
+            speeds.pop(0)
+            if len(queue) ==0:
+                break
+        if num != 0:
+            answer.append(num)
+    
+    return answer
+    
+def main():
+    print(solution([95,90,99,99,80,99],[1,1,1,1,1,1]))
+        
+main()
+

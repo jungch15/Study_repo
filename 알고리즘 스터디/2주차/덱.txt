@@ -1,0 +1,73 @@
+import sys
+
+class Deque:
+    
+    def __init__(self):
+        self.s = []
+
+    def push_back(self, x):
+        self.s.append(x)
+
+    def push_front(self, x):
+        self.s.insert(0,x)
+    
+    def pop_back(self):
+        if len(self.s) == 0:
+            print(-1)
+        else:
+            print(self.s.pop())
+
+    def pop_front(self):
+        if len(self.s) == 0:
+            print(-1)
+        else:
+            print(self.s.pop(0))
+    
+    def size(self):
+        print(len(self.s))
+    
+    def empty(self):
+        if len(self.s) == 0:
+            print(1)
+        else:
+            print(0)
+        
+    def back(self):
+        if len(self.s) == 0:
+            print(-1)
+        else:
+            print(self.s[-1])
+            
+    def front(self):
+        if len(self.s) == 0:
+            print(-1)
+        else:
+            print(self.s[0])
+
+
+
+def main():
+    n = int(sys.stdin.readline())
+    deque = Deque()
+    for i in range(n):
+        order = sys.stdin.readline().strip()
+        if " " in order:
+            o,x = (order.strip().split())
+            if o == "push_back":
+                deque.push_back(x)
+            else:
+                deque.push_front(x)
+        elif order == "pop_front":
+            deque.pop_front()
+        elif order == "pop_back":
+            deque.pop_back()
+        elif order == "size":
+            deque.size()
+        elif order == "empty":
+            deque.empty()
+        elif order == "front":
+            deque.front()
+        else:
+            deque.back()
+        
+main()

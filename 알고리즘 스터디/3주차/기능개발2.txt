@@ -1,0 +1,21 @@
+def solution(progresses, speeds):
+    answer = []
+    days = []
+    for i in range(len(progresses)):
+        n=0
+        x=progresses[i]
+        while x<100:
+            x+=speeds[i]
+            n+=1
+        days.append(n)
+        
+    b = -1
+    while len(days) != 0:
+        a = days.pop(0)
+        if a > b:
+            answer.append(1)
+            b = a
+        else:
+            answer[-1]+=1
+       
+    return answer

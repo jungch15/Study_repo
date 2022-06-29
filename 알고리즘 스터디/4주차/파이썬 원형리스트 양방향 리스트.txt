@@ -1,0 +1,139 @@
+class Node:
+    def __init__(self, key=None):
+        self.key = key
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+
+    def pushBack(self, key):
+        new = Node(key)
+        if self.size == 0:
+            self.head = new
+        else:
+            tail = self.head
+            while tail.next != None:
+                if tail.next == self.head:
+                    break
+                tail = tail.next
+            tail.next = new
+            tail.next.next = self.head
+        self.size += 1
+
+    def remove(self, x):
+        v = self.head
+        if x == self.head:
+            while v.next != self.head:
+                v = v.next
+            self.head = self.head.next
+            v.next = self.head
+        else:
+            while v.next != x:
+                v = v.next
+            v.next = x.next
+            self.size -= 1
+     
+    def Josephus(self, num):
+        v = self.head
+        for _ in range(num-1):
+            v = v.next
+        print(v.key, end='')
+        for _ in range(self.size-1):
+            self.remove(v)
+            print(", ", end='')
+            for i in range(num):
+                v = v.next
+            print(v.key, end='')
+
+    
+L = LinkedList()
+cmd = input().split()
+answer = []
+
+for i in range(1, int(cmd[0])+1):
+    L.pushBack(i)
+
+print("<", end='')
+L.Josephus(int(cmd[1]))
+print(">", end='')
+
+
+
+#양방향 원형 연결리스트
+
+class Node:
+    def __init__(self, key=None):
+        self.key = key
+        self.prev = self.next = self
+
+class LinkedList:
+    def __init__(self):
+        self.head = Node()
+        self.size = 0
+
+    def pushFront(self, key):
+        new = Node(key)
+        self.head.next.prev = new
+        new.next = self.head.next
+        new.prev = self.head
+        self.head.next = new
+        self.size += 1
+
+    def pushBack(self, key):
+        new = Node(key)
+        self.head.prev.next = new
+        new.prev = self.head.prev
+        new.next = self.head
+        self.head.prev = new
+        self.size += 1
+
+    def popFront(self):
+        self.head.next.next.prev = self.head
+        self.head.next = self.head.next.next
+        self.size -= 1
+
+    def popBack(self):
+        self.head.prev.prev.next = self.head
+        self.head.prev = self.head.prev.prev
+        self.size -= 1
+
+    def leftRotate(self):
+        self.pushBack(self.head.next.key)
+        self.popFront()
+
+    def rightRotate(self):
+        self.pushFront(self.head.prev.key)
+        self.popBack()
+
+    def index(self, key):
+        num = 1
+        v = self.head.next
+        while v.key != key:
+            v = v.next
+            num += 1
+        return num
+        
+
+L = LinkedList()
+cmd = input().split()
+num = input().split()
+answer = 0
+
+for i in range(1, int(cmd[0])+1):
+    L.pushBack(i)
+
+for i in range(int(cmd[1])):
+    if L.head.next.key != int(num[i]):
+        if L.index(int(num[i])) > L.size/2+1:
+            while L.head.next.key != int(num[i]):
+                L.rightRotate()
+                answer += 1
+        else:
+            while L.head.next.key != int(num[i]):
+                L.leftRotate()
+                answer += 1
+    L.popFront()
+
+print(answer)

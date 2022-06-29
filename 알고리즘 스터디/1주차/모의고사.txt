@@ -1,0 +1,46 @@
+내가 벡터를 잘 몰라서 일단 배열 하는 것처럼 했는데 iterator로도 한 번 구현해 보자
+##################
+
+#include <string>
+#include <vector>
+using namespace std;
+
+int max(int a, int b){return a>b?a:b;}
+
+vector<int> solution(vector<int> answers) {
+    vector<int> answer;
+    int size = answers.size();
+    vector<int> arr(3);
+    
+    for(int i=0;i<size;i++){ //1번 
+        int math1[5] = {1,2,3,4,5};
+        if(answers[i] == math1[i%5])
+            arr[0]++;
+    }
+
+    for(int i=0;i<size;i++){ //2번
+        int math2[8] = {2,1,2,3,2,4,2,5};
+        if(answers[i] == math2[i%8])
+            arr[1]++;
+    }
+    
+    for(int i=0;i<size;i++){ //3번
+        int math3[10] = {3,3,1,1,2,2,4,4,5,5};
+        if(answers[i] == math3[i%10])
+            arr[2]++;
+    }
+    
+    int maximum = max(max(arr[0],arr[1]),arr[2]);
+    for(int i=0;i<3;i++)
+        if(maximum == arr[i])
+            answer.push_back(i+1);
+    return answer;
+}
+#########################################################
+int main(){
+    
+    vector<int> answer = solution({5,3,2,4,2});
+    vector<int>::iterator iter;
+        for(iter = answer.begin(); iter != answer.end() ; iter++)
+            cout << *iter << " ";
+}

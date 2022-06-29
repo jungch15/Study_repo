@@ -1,0 +1,5 @@
+파이썬 사용법
+https://docs.python.org/3/library/collections.html#collections.deque
+
+c++/ java 사용법
+https://swexpertacademy.com/main/code/referenceCode/referenceCodeList.do?#none

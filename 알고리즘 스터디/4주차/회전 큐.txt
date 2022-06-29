@@ -1,0 +1,126 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+private:
+	int data;
+	Node* before;
+	Node* next;
+public:
+	Node(int n=0):data(n),before(NULL),next(NULL){}
+	int getData(){return data;}
+	void setData(int d){data = d;}
+	Node* getBefore(){return before;}
+	void setBefore(Node* b){before = b;}
+	Node* getNext(){return next;}
+	void setNext(Node* n){next = n;}
+	void display(){cout<<data<<endl;}
+};
+
+class LinkedList{
+private:
+	Node* head;
+	Node* tail;
+public:
+	LinkedList():tail(NULL){head = new Node(0);}
+	~LinkedList(){
+		while(!isEmpty()){
+			Node* del = remove();
+			delete del;
+		}
+		delete head;
+		delete tail;
+	}
+	void insert(Node* node){
+		if(isEmpty()){
+			tail = node;
+			head->setNext(node);
+			node->setBefore(head);
+		}
+		else{
+			Node* next = head->getNext();
+			node->setNext(next);
+			next->setBefore(node);
+			node->setBefore(tail);
+			head->setNext(node);
+		}
+		tail->setNext(node);
+	}
+	Node* remove(){
+		if(isEmpty())
+			return NULL;
+		Node* delNode = head->getNext();
+		if(delNode->getNext() == delNode)
+			head->setNext(NULL);
+		else{
+			Node* Next = delNode->getNext();
+			head->setNext(Next);
+			Next->setBefore(tail);
+			tail->setNext(Next);
+		}
+		return delNode;
+	}
+	int top(){return head->getNext()->getData();}
+	void moveRight(int n){
+		Node* next = head->getNext();
+		for(int i=0;i<n;i++){
+			next = next->getNext();
+			tail = tail->getNext();
+		}
+		head->setNext(next);
+	}
+	void moveLeft(int n){
+		Node* next = head->getNext();
+		for(int i=0;i<n;i++){
+			 next = next->getBefore();
+			 tail = tail->getBefore();
+		}
+		head->setNext(next);
+	}
+	bool isEmpty(){return head->getNext() == NULL;}
+	void display(){
+		for(Node* i = head->getNext();i!=NULL;i=i->getNext())
+			i->display();
+	}
+};
+
+
+
+int main(){
+	LinkedList list;
+	int num, order;
+	cin>>num>>order;
+	int arr[order];
+	for(int k=0;k<order;k++)
+		cin>>arr[k];
+	for(int i=num;i>=1;i--)
+		list.insert(new Node(i));
+	////////////////////////////
+	int min =0;
+	for(int i=0;i<order;i++){
+		if(list.top() == arr[i])
+			list.remove();
+		else{
+			int o = 0, r = 0;
+			int present = list.top();
+			while(list.top() != arr[i]){
+				list.moveRight(1);
+				o++;
+			}
+			while(list.top() != present){
+				list.moveRight(1);
+				r++;
+			}
+			if(o < r){
+				list.moveRight(o);
+				min+=o;
+			}
+			else{
+				list.moveLeft(r);
+				min+=r;
+			}
+			list.remove();
+		}
+	}
+	cout<<min<<endl;
+}

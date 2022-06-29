@@ -1,0 +1,19 @@
+import heapq
+import sys
+
+heap = []
+n = int(sys.stdin.readline())
+d = int(sys.stdin.readline())
+for i in range(n-1):
+    a = int(sys.stdin.readline())
+    heapq.heappush(heap,(-a,a))
+add = 0
+if n <=1:
+    print(0)
+else:    
+    while d <= heap[0][1]:
+        h = heapq.heappop(heap)[1]-1
+        heapq.heappush(heap,(-h,h))
+        d+=1
+        add+=1
+    print(add)
